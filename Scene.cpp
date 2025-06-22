@@ -53,6 +53,10 @@ void RenderOneFrame(float inDeltaTime)
     RHICommandList rhiCommandList;
 
     FrameBufferRT* rt = g_HDRFBO->BeginRendering(rhiCommandList.mCommandList);
+
+    DirectX::XMFLOAT4 temp;
+    DirectX::XMStoreFloat4(&temp,g_mainCamera.mPosition);
+    g_node->mStaticMeshComponent->mMaterial->SetCameraWorldPosition(temp.x, temp.y, temp.z);
     g_node->Draw(rhiCommandList.mCommandList, g_projectionMatrix, g_mainCamera, rt->mColorBuffer.mFormat,
                  rt->mDSBuffer.mFormat);
     g_HDRFBO->EndRendering(rhiCommandList.mCommandList);
